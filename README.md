@@ -1,6 +1,6 @@
-# Meteor Addon Template
+# Meteor Addon For Salc1 Dupe
 
-A template to allow easy usage of the Meteor Addon API.
+Automaticaly does Salc1 Dupe
 
 ### How to use:  
 - Clone this project
