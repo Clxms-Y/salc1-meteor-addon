@@ -12,6 +12,15 @@ import net.minecraft.client.gui.screen.ingame.HorseScreen;
 public class AutoDuper extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
+    private final Setting<Integer> cycles = sgGeneral.add(new IntSetting.Builder()
+        .name("cycles")
+        .description("Number of dupe cycles to do (0 = infinite)")
+        .defaultValue(1)
+        .min(0)
+        .sliderMax(50)
+        .build()
+    );
+
     private final Setting<Double> mountDelay = sgGeneral.add(new DoubleSetting.Builder()
         .name("mount-delay")
         .description("Delay for mounting in seconds.")
@@ -68,6 +77,8 @@ public class AutoDuper extends Module {
 
     private final DupeSequencer sequencer;
     private boolean wasInInventory = false;
+    private int cyclesCompleted = 0;
+    private boolean cycleInProgress = false;
 
     public AutoDuper() {
         super(Addon.CATEGORY, "auto-duper", "Automatically dupes items using donkey method.");
@@ -76,29 +87,53 @@ public class AutoDuper extends Module {
 
     @Override
     public void onActivate() {
+        cyclesCompleted = 0;
+        cycleInProgress = false;
+        wasInInventory = false;
         updateDelays();
         sequencer.toggle();
-        wasInInventory = false;
     }
 
     @Override
     public void onDeactivate() {
         sequencer.reset();
         wasInInventory = false;
+        cyclesCompleted = 0;
+        cycleInProgress = false;
+        if (mc.options.sneakKey.isPressed()) {
+            mc.options.sneakKey.setPressed(false);
+        }
     }
 
     @EventHandler
     private void onTick(TickEvent.Post event) {
+        int currentStage = sequencer.getCurrentStage();
+
         // Check for inventory closed with escape
         if (mc.currentScreen instanceof HorseScreen) {
             wasInInventory = true;
         } else if (wasInInventory && mc.currentScreen == null) {
-            // Inventory was closed
             wasInInventory = false;
-            if (sequencer.getCurrentStage() >= 4 && sequencer.getCurrentStage() <= 7) {
-                // If we were in the middle of inventory operations, disable the module
-                toggle();
+            if (currentStage >= 4 && currentStage <= 7) {
                 info("Inventory closed - stopping dupe sequence");
+                toggle();
+                return;
+            }
+        }
+
+        // Track cycle progress
+        if (currentStage == 1 && !cycleInProgress) {
+            cycleInProgress = true;
+        } else if (currentStage == 0 && cycleInProgress) {
+            cycleInProgress = false;
+            cyclesCompleted++;
+            info("Completed cycle " + cyclesCompleted);
+
+            // Check if we should stop
+            if (cycles.get() != 0 && cyclesCompleted >= cycles.get()) {
+                info("Completed all " + cycles.get() + " cycles - stopping");
+                toggle();
+                return;
             }
         }
 
@@ -111,7 +146,6 @@ public class AutoDuper extends Module {
     }
 
     private void updateDelays() {
-        // Convert seconds to ticks (20 ticks = 1 second)
         sequencer.setMountDelay((int) (mountDelay.get() * 20));
         sequencer.setKeyPressDelay((int) (keypressDelay.get() * 20));
         sequencer.setInventoryDelay((int) (inventoryDelay.get() * 20));

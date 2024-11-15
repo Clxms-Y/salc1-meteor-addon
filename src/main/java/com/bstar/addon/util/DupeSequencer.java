@@ -1,12 +1,12 @@
 package com.bstar.addon.util;
 
+import net.minecraft.text.Text;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.DonkeyEntity;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 import net.minecraft.screen.slot.SlotActionType;
-import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.client.gui.screen.ingame.HorseScreen;
 import net.minecraft.screen.HorseScreenHandler;
@@ -26,53 +26,12 @@ public class DupeSequencer {
     private int dismountDelay = 2;
 
     // Getters and setters for delays
-    public void setMountDelay(int delay) {
-        this.mountDelay = delay;
-    }
-
-    public void setKeyPressDelay(int delay) {
-        this.keyPressDelay = delay;
-    }
-
-    public void setInventoryDelay(int delay) {
-        this.inventoryDelay = delay;
-    }
-
-    public void setMoveItemsDelay(int delay) {
-        this.moveItemsDelay = delay;
-    }
-
-    public void setChestApplyDelay(int delay) {
-        this.chestApplyDelay = delay;
-    }
-
-    public void setDismountDelay(int delay) {
-        this.dismountDelay = delay;
-    }
-
-    public int getMountDelay() {
-        return mountDelay;
-    }
-
-    public int getKeyPressDelay() {
-        return keyPressDelay;
-    }
-
-    public int getInventoryDelay() {
-        return inventoryDelay;
-    }
-
-    public int getMoveItemsDelay() {
-        return moveItemsDelay;
-    }
-
-    public int getChestApplyDelay() {
-        return chestApplyDelay;
-    }
-
-    public int getDismountDelay() {
-        return dismountDelay;
-    }
+    public void setMountDelay(int delay) { this.mountDelay = delay; }
+    public void setKeyPressDelay(int delay) { this.keyPressDelay = delay; }
+    public void setInventoryDelay(int delay) { this.inventoryDelay = delay; }
+    public void setMoveItemsDelay(int delay) { this.moveItemsDelay = delay; }
+    public void setChestApplyDelay(int delay) { this.chestApplyDelay = delay; }
+    public void setDismountDelay(int delay) { this.dismountDelay = delay; }
 
     public void reset() {
         isRunning = false;
