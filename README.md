@@ -3,6 +3,5 @@
 Automaticaly does Salc1 Dupe
 
 ### How to use:  
-- Clone this project
-- Use this template to create new modules/commands
+- Clone this project or Download the ZIP
 - Run the mod with Meteor.
