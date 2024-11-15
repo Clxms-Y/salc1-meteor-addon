@@ -21,6 +21,13 @@ public class AutoDuper extends Module {
         .build()
     );
 
+    private final Setting<Boolean> shulkersOnly = sgGeneral.add(new BoolSetting.Builder()
+        .name("shulkers-only")
+        .description("Only dupes shulker boxes")
+        .defaultValue(false)
+        .build()
+    );
+
     private final Setting<Double> mountDelay = sgGeneral.add(new DoubleSetting.Builder()
         .name("mount-delay")
         .description("Delay for mounting in seconds.")
@@ -91,6 +98,7 @@ public class AutoDuper extends Module {
         cycleInProgress = false;
         wasInInventory = false;
         updateDelays();
+        sequencer.setShulkersOnly(shulkersOnly.get());
         sequencer.toggle();
     }
 
@@ -109,7 +117,6 @@ public class AutoDuper extends Module {
     private void onTick(TickEvent.Post event) {
         int currentStage = sequencer.getCurrentStage();
 
-        // Check for inventory closed with escape
         if (mc.currentScreen instanceof HorseScreen) {
             wasInInventory = true;
         } else if (wasInInventory && mc.currentScreen == null) {
@@ -121,7 +128,6 @@ public class AutoDuper extends Module {
             }
         }
 
-        // Track cycle progress
         if (currentStage == 1 && !cycleInProgress) {
             cycleInProgress = true;
         } else if (currentStage == 0 && cycleInProgress) {
@@ -129,7 +135,6 @@ public class AutoDuper extends Module {
             cyclesCompleted++;
             info("Completed cycle " + cyclesCompleted);
 
-            // Check if we should stop
             if (cycles.get() != 0 && cyclesCompleted >= cycles.get()) {
                 info("Completed all " + cycles.get() + " cycles - stopping");
                 toggle();

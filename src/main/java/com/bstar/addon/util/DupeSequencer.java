@@ -1,6 +1,5 @@
 package com.bstar.addon.util;
 
-import net.minecraft.text.Text;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.DonkeyEntity;
@@ -10,11 +9,13 @@ import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.util.Hand;
 import net.minecraft.client.gui.screen.ingame.HorseScreen;
 import net.minecraft.screen.HorseScreenHandler;
+import net.minecraft.text.Text;
 
 public class DupeSequencer {
     private boolean isRunning = false;
     private int currentStage = 0;
     private int tickDelay = 0;
+    private boolean shulkersOnly = false;
     private final MinecraftClient client = MinecraftClient.getInstance();
 
     // Delay fields
@@ -32,6 +33,7 @@ public class DupeSequencer {
     public void setMoveItemsDelay(int delay) { this.moveItemsDelay = delay; }
     public void setChestApplyDelay(int delay) { this.chestApplyDelay = delay; }
     public void setDismountDelay(int delay) { this.dismountDelay = delay; }
+    public void setShulkersOnly(boolean shulkersOnly) { this.shulkersOnly = shulkersOnly; }
 
     public void reset() {
         isRunning = false;
@@ -231,6 +233,13 @@ public class DupeSequencer {
                 for (int j = 32; j < handler.slots.size(); j++) {
                     if (!handler.getSlot(j).getStack().isEmpty() &&
                         handler.getSlot(j).getStack().getItem() != Items.CHEST) {
+
+                        // Check if we should only move shulker boxes
+                        if (shulkersOnly) {
+                            String itemId = handler.getSlot(j).getStack().getItem().toString();
+                            if (!itemId.contains("shulker_box")) continue;
+                        }
+
                         client.interactionManager.clickSlot(handler.syncId, j, 0, SlotActionType.PICKUP, client.player);
                         client.interactionManager.clickSlot(handler.syncId, i, 0, SlotActionType.PICKUP, client.player);
                         break;
@@ -248,7 +257,12 @@ public class DupeSequencer {
 
         for (int i = 2; i < 17; i++) {
             if (!handler.getSlot(i).getStack().isEmpty()) {
-                // First try to find an empty slot in player inventory
+                // Check if we should only move shulker boxes
+                if (shulkersOnly) {
+                    String itemId = handler.getSlot(i).getStack().getItem().toString();
+                    if (!itemId.contains("shulker_box")) continue;
+                }
+
                 boolean foundEmptySlot = false;
                 for (int j = 32; j < handler.slots.size(); j++) {
                     if (handler.getSlot(j).getStack().isEmpty()) {
@@ -259,7 +273,6 @@ public class DupeSequencer {
                     }
                 }
 
-                // If no empty slot was found, throw the item
                 if (!foundEmptySlot) {
                     client.interactionManager.clickSlot(handler.syncId, i, 0, SlotActionType.PICKUP, client.player);
                     client.interactionManager.clickSlot(handler.syncId, -999, 0, SlotActionType.PICKUP, client.player);
