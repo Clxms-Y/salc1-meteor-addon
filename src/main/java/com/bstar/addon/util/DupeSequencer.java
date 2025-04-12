@@ -1,18 +1,18 @@
 package com.bstar.addon.util;
 
-import net.minecraft.item.ItemStack;
-import java.util.List;
-import java.util.ArrayList;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.ingame.HorseScreen;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.DonkeyEntity;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
-import net.minecraft.screen.slot.SlotActionType;
-import net.minecraft.util.Hand;
-import net.minecraft.client.gui.screen.ingame.HorseScreen;
 import net.minecraft.screen.HorseScreenHandler;
+import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.text.Text;
+import net.minecraft.util.Hand;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DupeSequencer {
     private boolean isRunning = false;
