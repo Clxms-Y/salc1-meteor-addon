@@ -5,7 +5,8 @@
   "name": "Meteor Auto Duper",
   "description": "Auto duper addon for meteor client.",
   "authors": [
-    "Your Name"
+    "bstar16",
+    "AngelsOfMercy"
   ],
   "contact": {
     "repo": "https://github.com/bstar16"
@@ -14,7 +15,7 @@
   "environment": "client",
   "entrypoints": {
     "meteor": [
-      "com.bstar.addon.Addon"
+      "com.bstar.duper.Main"
     ]
   },
   "depends": {

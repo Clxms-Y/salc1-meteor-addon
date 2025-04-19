@@ -1,7 +1,7 @@
-package com.bstar.addon.modules;
+package com.duper.modules;
 
-import com.bstar.addon.Addon;
-import com.bstar.addon.util.DupeSequencer;
+import com.duper.Main;
+import com.duper.util.DupeSequencer;
 import meteordevelopment.meteorclient.events.game.GameLeftEvent;
 import meteordevelopment.meteorclient.events.world.TickEvent;
 import meteordevelopment.meteorclient.settings.*;
@@ -95,7 +95,7 @@ public class AutoDuper extends Module {
     private boolean cycleInProgress = false;
 
     public AutoDuper() {
-        super(Addon.CATEGORY, "auto-duper", "Automatically dupes items using donkey method.");
+        super(Main.CATEGORY, "auto-duper", "Automatically dupes items using donkey method.");
         sequencer = new DupeSequencer();
     }
 

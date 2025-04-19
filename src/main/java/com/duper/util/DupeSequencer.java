@@ -1,4 +1,4 @@
-package com.bstar.addon.util;
+package com.duper.util;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.HorseScreen;
