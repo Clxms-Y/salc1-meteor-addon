@@ -24,13 +24,13 @@ public class AutoDuper extends Module {
     private final Setting<Boolean> shulkersOnly = sgGeneral.add(new BoolSetting.Builder()
         .name("shulkers-only")
         .description("Only dupes shulker boxes")
-        .defaultValue(false)
+        .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> mountWithoutChest = sgGeneral.add(new BoolSetting.Builder()
         .name("mount-without-chest")
-        .description("Mounts the donkey without having a chest selected")
+        .description("Mounts the donkey without having a chest selected, This can lead to crashes. Be careful")
         .defaultValue(false)
         .build()
     );
@@ -40,7 +40,7 @@ public class AutoDuper extends Module {
         .description("Delay for mounting in seconds.")
         .defaultValue(1.0)
         .min(0)
-        .sliderMax(2)
+        .sliderMax(20)
         .build()
     );
 
