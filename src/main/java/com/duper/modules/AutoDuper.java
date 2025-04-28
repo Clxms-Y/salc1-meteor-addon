@@ -28,13 +28,6 @@ public class AutoDuper extends Module {
         .build()
     );
 
-    private final Setting<Boolean> mountWithoutChest = sgGeneral.add(new BoolSetting.Builder()
-        .name("mount-without-chest")
-        .description("Mounts the donkey without having a chest selected, This can lead to crashes. Be careful")
-        .defaultValue(false)
-        .build()
-    );
-
     private final Setting<Double> mountDelay = sgGeneral.add(new DoubleSetting.Builder()
         .name("mount-delay")
         .description("Delay for mounting in seconds.")
@@ -106,7 +99,6 @@ public class AutoDuper extends Module {
         wasInInventory = false;
         updateDelays();
         sequencer.setShulkersOnly(shulkersOnly.get());
-        sequencer.setMountWithoutChest(mountWithoutChest.get());
         sequencer.toggle();
     }
 
