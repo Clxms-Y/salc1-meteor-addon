@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "meteor-auto-duper",
+  "id": "auto-duper",
   "version": "${version}",
   "name": "Meteor Auto Duper",
   "description": "Auto duper addon for meteor client. Updated version of bstar16's addon",
