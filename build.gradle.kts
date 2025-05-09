@@ -34,14 +34,13 @@ dependencies {
 tasks {
     processResources {
         filteringCharset = "UTF-8"
-        inputs.properties(project.properties)
-        from(sourceSets.main.get().resources) {
-            filesMatching("fabric.mod.json") {
-                expand(mutableMapOf(
-                    "version" to project.version,
-                    "mc_version" to project.extra["minecraft_version"]
-                ))
-            }
+        filesMatching("fabric.mod.json") {
+            expand(
+                mutableMapOf(
+                    "version" to project.version.toString(),
+                    "mc_version" to project.extra["minecraft_version"].toString()
+                )
+            )
         }
     }
 
