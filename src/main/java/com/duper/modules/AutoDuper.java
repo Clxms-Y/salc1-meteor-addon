@@ -88,7 +88,7 @@ public class AutoDuper extends Module {
     private boolean cycleInProgress = false;
 
     public AutoDuper() {
-        super(Main.CATEGORY, "auto-duper", "Automatically dupes items using donkey method.");
+        super(Main.CATEGORY, "auto-duper", "Automatically dupes items using donkey method.\nMade for 2b2toce.org");
         sequencer = new DupeSequencer();
     }
 
